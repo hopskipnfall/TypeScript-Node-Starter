@@ -1,22 +1,14 @@
-import errorHandler from "errorhandler";
+import Discord from "discord.js";
+import {default as config } from "./config/config";
 
-import app from "./app";
+const client = new Discord.Client();
 
-/**
- * Error Handler. Provides full stack - remove for production
- */
-app.use(errorHandler());
-
-/**
- * Start Express server.
- */
-const server = app.listen(app.get("port"), () => {
-  console.log(
-    "  App is running at http://localhost:%d in %s mode",
-    app.get("port"),
-    app.get("env")
-  );
-  console.log("  Press CTRL-C to stop\n");
+client.on("ready", () => {
+  console.log("Bot has started");
 });
 
-export default server;
+client.on("message", () => {
+  console.log("Message");
+});
+
+client.login(config.token);
