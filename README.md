@@ -1,4 +1,28 @@
-# TypeScript Node Starter
+# jonn-bot
+
+## Configuration
+
+In `src/config/` add a `config.ts` file that looks like this:
+
+```typescript
+export default {
+  "token": "djigoj24gijo-dgj9wdfj",  // Discord bot token.
+  "prefix" : "./" // Command prefix.
+};
+```
+
+## Building the bot
+
+npm install
+npm run-script build
+
+## Running the bot
+
+```shell
+npm run-script build && npm run-script run
+```
+
+<!-- # TypeScript Node Starter
 
 [![Dependency Status](https://david-dm.org/Microsoft/TypeScript-Node-Starter.svg)](https://david-dm.org/Microsoft/TypeScript-Node-Starter) [![Build Status](https://travis-ci.org/Microsoft/TypeScript-Node-Starter.svg?branch=master)](https://travis-ci.org/Microsoft/TypeScript-Node-Starter) 
 
@@ -530,4 +554,4 @@ In that file you'll find two sections:
 To install or update these dependencies you can use `npm install` or `npm update`.
 
 # Hackathon Starter Project
-A majority of this quick start's content was inspired or adapted from Sahat's excellent [Hackathon Starter project](https://github.com/sahat/hackathon-starter).
+A majority of this quick start's content was inspired or adapted from Sahat's excellent [Hackathon Starter project](https://github.com/sahat/hackathon-starter). -->
