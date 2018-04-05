@@ -1,11 +1,12 @@
 import { Message } from "discord.js";
+import { ParsedUserCommand } from "../models/parsed_user_command";
 
 export interface Command {
   commandNames: string[];
 
   helpMessage: string;
 
-  run(message: Message): Promise<boolean>;
+  run(parsedUserCommand: ParsedUserCommand): Promise<boolean>;
 
-  hasPermissionToRun(message: Message): boolean;
+  hasPermissionToRun(parsedUserCommand: ParsedUserCommand): boolean;
 }

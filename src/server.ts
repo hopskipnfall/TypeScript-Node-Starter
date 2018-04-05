@@ -1,6 +1,6 @@
 import Discord, { Message } from "discord.js";
-import {default as config } from "./config/config";
-import { commandHandler } from "./commandhandler";
+import { default as config } from "./config/config";
+import { commandHandler } from "./command_handler";
 
 const client = new Discord.Client();
 

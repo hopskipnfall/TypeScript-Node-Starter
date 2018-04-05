@@ -5,7 +5,7 @@
 In `src/config/` add a `config.ts` file that looks like this:
 
 ```typescript
-export default {
+export let config = {
   "token": "djigoj24gijo-dgj9wdfj",  // Discord bot token.
   "prefix" : "./" // Command prefix.
 };
@@ -13,13 +13,23 @@ export default {
 
 ## Building the bot
 
-npm install
-npm run-script build
+```shell
+npm install # Install deps.
+npm run-script build # Build the code.
+```
 
 ## Running the bot
 
 ```shell
 npm run-script build && npm run-script run
+```
+
+## Testing the bot
+
+TODO: Make this work.
+
+```shell
+npm run-script test
 ```
 
 <!-- # TypeScript Node Starter
