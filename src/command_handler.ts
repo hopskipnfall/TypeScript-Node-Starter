@@ -2,7 +2,8 @@ import { Message } from "discord.js";
 import { DaleCommand } from "./commands/dale";
 import { Command } from "./commands/command";
 import { config } from "./config/config";
-import { ParsedUserCommand } from "./models/parsed_user_command";
+import { CommandContext } from "./models/command_context";
+import { HelpCommand } from "./commands/help";
 
 /** Handler for bot commands issued by users. */
 class CommandHandler {
@@ -14,6 +15,7 @@ class CommandHandler {
     ];
 
     this.commands = commandClasses.map(commandClass => new commandClass());
+    this.commands.push(new HelpCommand(this.commands));
   }
 
   /** Executes user commands contained in a message if appropriate. */
@@ -22,17 +24,17 @@ class CommandHandler {
       return;
     }
 
-    const parsedCommand = new ParsedUserCommand(message, config.prefix);
+    const commandContext = new CommandContext(message, config.prefix);
 
-    const allowedCommands = this.commands.filter(command => command.hasPermissionToRun(parsedCommand));
-    const matchedCommand = this.commands.find(command => command.commandNames.indexOf(parsedCommand.parsedCommandName) > -1);
+    const allowedCommands = this.commands.filter(command => command.hasPermissionToRun(commandContext));
+    const matchedCommand = this.commands.find(command => command.commandNames.includes(commandContext.args[0]));
 
     if (!matchedCommand) {
       await message.reply(`I don't recognize that command. Try !help.`);
-    } else if (!allowedCommands.some(command => command == matchedCommand)) {
+    } else if (!allowedCommands.includes(matchedCommand)) {
       await message.reply(`you aren't allowed to use that command. Try !help.`);
     } else {
-      await matchedCommand.run(parsedCommand);
+      await message.reply(matchedCommand.helpMessage);
     }
     return Promise.resolve();
   }

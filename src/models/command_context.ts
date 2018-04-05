@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 
 /** A user-given command extracted from a message. */
-export class ParsedUserCommand {
+export class CommandContext {
   /** Command name in all lowercase. */
   readonly parsedCommandName: string;
   /** Arguments (split by space). */
@@ -15,10 +15,5 @@ export class ParsedUserCommand {
     this.parsedCommandName = splitMessage.shift().toLowerCase();
     this.args = splitMessage;
     this.originalMessage = message;
-  }
-
-  /** Extracts command args (separated by a space) from a message containing a command. */
-  private getCommandArgs(message: Message): string[] {
-    return ;
   }
 }

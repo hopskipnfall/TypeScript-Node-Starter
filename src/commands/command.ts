@@ -1,12 +1,20 @@
 import { Message } from "discord.js";
-import { ParsedUserCommand } from "../models/parsed_user_command";
+import { CommandContext } from "../models/command_context";
 
 export interface Command {
-  commandNames: string[];
+  /**
+   * List of aliases for the command.
+   *
+   * The first name in the list is the primary command name.
+   */
+  readonly commandNames: string[];
 
-  helpMessage: string;
+  /** Usage documentation. */
+  readonly helpMessage: string;
 
-  run(parsedUserCommand: ParsedUserCommand): Promise<boolean>;
+  /** Execute the command. */
+  run(parsedUserCommand: CommandContext): Promise<boolean>;
 
-  hasPermissionToRun(parsedUserCommand: ParsedUserCommand): boolean;
+  /** Returns whether or not the requesting user can use the command in the current context. */
+  hasPermissionToRun(parsedUserCommand: CommandContext): boolean;
 }
