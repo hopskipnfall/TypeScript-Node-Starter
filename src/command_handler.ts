@@ -4,6 +4,7 @@ import { Command } from "./commands/command";
 import { config } from "./config/config";
 import { CommandContext } from "./models/command_context";
 import { HelpCommand } from "./commands/help";
+import { reactor } from "./reactions/reactor";
 
 /** Handler for bot commands issued by users. */
 class CommandHandler {
@@ -27,16 +28,21 @@ class CommandHandler {
     const commandContext = new CommandContext(message, config.prefix);
 
     const allowedCommands = this.commands.filter(command => command.hasPermissionToRun(commandContext));
-    const matchedCommand = this.commands.find(command => command.commandNames.includes(commandContext.args[0]));
+    const matchedCommand = this.commands.find(command => command.commandNames.includes(commandContext.parsedCommandName));
 
     if (!matchedCommand) {
       await message.reply(`I don't recognize that command. Try !help.`);
+      await reactor.failure(message);
     } else if (!allowedCommands.includes(matchedCommand)) {
       await message.reply(`you aren't allowed to use that command. Try !help.`);
+      await reactor.failure(message);
     } else {
-      await message.reply(matchedCommand.helpMessage);
+      await matchedCommand.run(commandContext).then(() => {
+          reactor.ack(message);
+        }).catch(reason => {
+          reactor.failure(message);
+        });
     }
-    return Promise.resolve();
   }
 
   /** Determines whether or not a message is a user command. */

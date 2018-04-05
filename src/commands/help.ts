@@ -12,7 +12,7 @@ export class HelpCommand implements Command {
     this.commands = commands;
   }
 
-  async run(commandContext: CommandContext): Promise<boolean> {
+  async run(commandContext: CommandContext): Promise<void> {
     const allowedCommands = this.commands.filter(command => command.hasPermissionToRun(commandContext));
 
     if (commandContext.args.length == 0) {
@@ -20,16 +20,17 @@ export class HelpCommand implements Command {
       const commandNames = allowedCommands.map(command => command.commandNames[0]);
       await commandContext.originalMessage.reply(
         `here is a list of commands you can run: ${commandNames.join(", ")}. Try !help ${commandNames[0]} to learn more about one of them.`);
-      return Promise.resolve(true);
+      return;
     }
 
-    const matchedCommand = this.commands.find(command => command.commandNames.indexOf(commandContext.parsedCommandName) > -1);
+    const matchedCommand = this.commands.find(command => command.commandNames.includes(commandContext.args[0]));
     if (!matchedCommand) {
       await commandContext.originalMessage.reply("I don't know about that command :(. Try !help to find all commands you can use.");
+      return Promise.reject("Unrecognized command");
     } else if (allowedCommands.includes(matchedCommand)) {
       await commandContext.originalMessage.reply(matchedCommand.helpMessage);
     }
-    return Promise.resolve(true);
+    return;
   }
 
   hasPermissionToRun(commandContext: CommandContext): boolean {

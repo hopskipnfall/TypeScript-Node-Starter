@@ -13,7 +13,7 @@ export interface Command {
   readonly helpMessage: string;
 
   /** Execute the command. */
-  run(parsedUserCommand: CommandContext): Promise<boolean>;
+  run(parsedUserCommand: CommandContext): Promise<void>;
 
   /** Returns whether or not the requesting user can use the command in the current context. */
   hasPermissionToRun(parsedUserCommand: CommandContext): boolean;
