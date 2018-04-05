@@ -50,7 +50,7 @@ export class DaleCommand implements Command {
       }
     }
 
-    await message.channel.send(`${netplay} ${message.member.nickname} is looking for games. ${message.member.nickname} will be in the Netplay role ${activeHumanReadable}.`)
+    await message.channel.send(`${netplay} ${message.member.displayName} is looking for games. ${message.member.displayName} will be in the Netplay role ${activeHumanReadable}.`)
         .then(message => {
           if (message instanceof Message &&  activeMinutes != 0) {
               message.delete(activeMinutes * 60 * 1000);
