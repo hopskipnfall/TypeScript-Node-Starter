@@ -5,6 +5,7 @@ import { config } from "./config/config";
 import { CommandContext } from "./models/command_context";
 import { HelpCommand } from "./commands/help";
 import { reactor } from "./reactions/reactor";
+import { NodaleCommand } from "./commands/nodale";
 
 /** Handler for bot commands issued by users. */
 class CommandHandler {
@@ -13,6 +14,7 @@ class CommandHandler {
   constructor() {
     const commandClasses = [
       DaleCommand,
+      NodaleCommand,
     ];
 
     this.commands = commandClasses.map(commandClass => new commandClass());
