@@ -38,7 +38,7 @@ class CommandHandler {
       await reactor.failure(message);
     } else {
       await matchedCommand.run(commandContext).then(() => {
-          reactor.ack(message);
+          reactor.success(message);
         }).catch(reason => {
           reactor.failure(message);
         });
