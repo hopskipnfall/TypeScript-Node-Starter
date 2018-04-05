@@ -12,11 +12,13 @@ export class Reactor {
 
   /** Indicates to the user that the command failed for some reason. */
   async failure(message: Message) {
+    await message.clearReactions();
     return message.react(this.getRandom(FAILURE_REACTIONS));
   }
 
   /** Indicates to the user that the command is no longer active, as intended. */
   async expired(message: Message) {
+    await message.clearReactions();
     return message.react(this.getRandom(EXPIRED_REACTIONS));
   }
 
