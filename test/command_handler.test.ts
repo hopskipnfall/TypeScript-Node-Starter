@@ -19,3 +19,9 @@
 //     expect(true).toBeTruthy();
 //   });
 // });
+
+describe("CommandHandler", () => {
+  it("should return true", () => {
+    expect(true).toBeTruthy();
+  });
+});

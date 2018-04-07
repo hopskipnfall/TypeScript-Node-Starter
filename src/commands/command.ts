@@ -10,7 +10,7 @@ export interface Command {
   readonly commandNames: string[];
 
   /** Usage documentation. */
-  readonly helpMessage: string;
+  getHelpMessage(commandPrefix: string): string;
 
   /** Execute the command. */
   run(parsedUserCommand: CommandContext): Promise<void>;

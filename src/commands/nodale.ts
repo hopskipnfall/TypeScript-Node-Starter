@@ -5,13 +5,9 @@ import { reactor } from "../reactions/reactor";
 
 export class NodaleCommand implements Command {
   readonly commandNames = ["nodale", "undale"];
-  readonly helpMessage = `use !nodale to remove yourself from the Netplay role.`;
 
   private static readonly ALLOWED_CHANNELS = ["411608283992817667", "296163502924627970", "425039332479467521"];
   private static readonly DALE_ROLE_NAME = "Netplay";
-
-  /** Map of user ID to timer. */
-  private readonly pendingExpirations = new Map<string, NodeJS.Timer>();
 
   async run(commandContext: CommandContext): Promise<void> {
     const message = commandContext.originalMessage;
@@ -30,5 +26,9 @@ export class NodaleCommand implements Command {
 
   hasPermissionToRun(commandContext: CommandContext): boolean {
     return NodaleCommand.ALLOWED_CHANNELS.includes(commandContext.originalMessage.channel.id);
+  }
+
+  getHelpMessage(commandPrefix: string) {
+    return `use ${commandPrefix}nodale to remove yourself from the Netplay role.`;
   }
 }

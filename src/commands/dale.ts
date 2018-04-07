@@ -4,12 +4,11 @@ import { CommandContext } from "../models/command_context";
 import { reactor } from "../reactions/reactor";
 
 export class DaleCommand implements Command {
-  readonly commandNames = ["dale", "lfg", "games"];
-  readonly helpMessage = `Use "!dale" to find a quick game. If you specify an amount of time "!dale 1h", "!dale 35m" you'll be notified of games for that amount of time. If you want to stay notified indefinitely use "!dale 4eva" or something similar. Race conditions abound, break me at your own risk.`;
-
   private static readonly ALLOWED_CHANNELS = ["411608283992817667", "296163502924627970", "425039332479467521"];
   private static readonly FOREVER_ARGS = ["4eva", "forever", "infinity"];
   private static readonly DALE_ROLE_NAME = "Netplay";
+  readonly commandNames = ["dale", "lfg", "games"];
+
 
   /** Map of user ID to timer. */
   private readonly pendingExpirations = new Map<string, NodeJS.Timer>();
@@ -17,7 +16,7 @@ export class DaleCommand implements Command {
   async run(commandContext: CommandContext): Promise<void> {
     const message = commandContext.originalMessage;
     if (!this.validateArgs(commandContext)) {
-      await message.reply(`incorrect usage. ${this.helpMessage}`);
+      await message.reply(`incorrect usage. ${this.getHelpMessage(commandContext.commandPrefix)}`);
       return Promise.reject("Invalid usage.");
     }
 
@@ -71,6 +70,11 @@ export class DaleCommand implements Command {
 
   hasPermissionToRun(commandContext: CommandContext): boolean {
     return DaleCommand.ALLOWED_CHANNELS.includes(commandContext.originalMessage.channel.id);
+  }
+
+  getHelpMessage(commandPrefix: string): string {
+    const p = commandPrefix;
+    return `Use "${p}dale" to find a quick game. If you specify an amount of time "${p}dale 1h", "${p}dale 35m" you'll be notified of games for that amount of time. If you want to stay notified indefinitely use "${p}dale 4eva" or something similar.`;
   }
 
   private validateArgs(commandContext: CommandContext): boolean {

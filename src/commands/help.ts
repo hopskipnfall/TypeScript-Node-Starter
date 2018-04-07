@@ -4,7 +4,6 @@ import { CommandContext } from "../models/command_context";
 
 export class HelpCommand implements Command {
   readonly commandNames = ["help", "halp", "hlep"];
-  readonly helpMessage = "I think you already know how to use this command...";
 
   private commands: Command[];
 
@@ -28,12 +27,15 @@ export class HelpCommand implements Command {
       await commandContext.originalMessage.reply("I don't know about that command :(. Try !help to find all commands you can use.");
       return Promise.reject("Unrecognized command");
     } else if (allowedCommands.includes(matchedCommand)) {
-      await commandContext.originalMessage.reply(matchedCommand.helpMessage);
+      await commandContext.originalMessage.reply(matchedCommand.getHelpMessage(commandContext.commandPrefix));
     }
-    return;
   }
 
   hasPermissionToRun(commandContext: CommandContext): boolean {
     return true;
+  }
+
+  getHelpMessage(commandPrefix: string) {
+    return "I think you already know how to use this command...";
   }
 }

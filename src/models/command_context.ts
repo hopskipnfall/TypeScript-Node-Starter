@@ -9,7 +9,10 @@ export class CommandContext {
   /** Original Message the command was extracted from. */
   readonly originalMessage: Message;
 
+  readonly commandPrefix: string;
+
   constructor(message: Message, prefix: string) {
+    this.commandPrefix = prefix;
     const splitMessage = message.content.slice(prefix.length).trim().split(/ +/g);
 
     this.parsedCommandName = splitMessage.shift().toLowerCase();
