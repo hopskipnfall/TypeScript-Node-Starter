@@ -1,17 +1,18 @@
 import { Message } from "discord.js";
 import { DaleCommand } from "./commands/dale";
 import { Command } from "./commands/command";
-import { config } from "./config/config";
 import { CommandContext } from "./models/command_context";
 import { HelpCommand } from "./commands/help";
 import { reactor } from "./reactions/reactor";
 import { NodaleCommand } from "./commands/nodale";
 
 /** Handler for bot commands issued by users. */
-class CommandHandler {
+export class CommandHandler {
   commands: Command[];
 
-  constructor() {
+  private readonly prefix: string;
+
+  constructor(prefix: string) {
     const commandClasses = [
       DaleCommand,
       NodaleCommand,
@@ -19,6 +20,7 @@ class CommandHandler {
 
     this.commands = commandClasses.map(commandClass => new commandClass());
     this.commands.push(new HelpCommand(this.commands));
+    this.prefix = prefix;
   }
 
   /** Executes user commands contained in a message if appropriate. */
@@ -27,7 +29,7 @@ class CommandHandler {
       return;
     }
 
-    const commandContext = new CommandContext(message, config.prefix);
+    const commandContext = new CommandContext(message, this.prefix);
 
     const allowedCommands = this.commands.filter(command => command.hasPermissionToRun(commandContext));
     const matchedCommand = this.commands.find(command => command.commandNames.includes(commandContext.parsedCommandName));
@@ -49,8 +51,6 @@ class CommandHandler {
 
   /** Determines whether or not a message is a user command. */
   private isCommand(message: Message): boolean {
-    return message.content.startsWith(config.prefix);
+    return message.content.startsWith(this.prefix);
   }
 }
-
-export let commandHandler = new CommandHandler();
