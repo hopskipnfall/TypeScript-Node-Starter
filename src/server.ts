@@ -14,4 +14,8 @@ client.on("message", (message: Message) => {
   commandHandler.handleMessage(message);
 });
 
+client.on("error", e => {
+  console.error("Discord client error!", e);
+});
+
 client.login(config.token);
