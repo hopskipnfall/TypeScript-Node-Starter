@@ -5,6 +5,8 @@ import { CommandContext } from "./models/command_context";
 import { HelpCommand } from "./commands/help";
 import { reactor } from "./reactions/reactor";
 import { NodaleCommand } from "./commands/nodale";
+import { BracketCommand } from "./commands/bracket";
+import { SetBracketCommand } from "./commands/set_bracket";
 
 /** Handler for bot commands issued by users. */
 export class CommandHandler {
@@ -16,6 +18,8 @@ export class CommandHandler {
     const commandClasses = [
       DaleCommand,
       NodaleCommand,
+      BracketCommand,
+      SetBracketCommand,
     ];
 
     this.commands = commandClasses.map(commandClass => new commandClass());
