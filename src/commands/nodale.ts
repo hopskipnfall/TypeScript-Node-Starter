@@ -12,16 +12,14 @@ export class NodaleCommand implements Command {
   async run(commandContext: CommandContext): Promise<void> {
     const message = commandContext.originalMessage;
 
-    const channel = message.channel;
-    if (!(channel instanceof TextChannel)) {
-      return Promise.reject("Channel is not a TextChannel");
-    }
+    const channel = message.channel as TextChannel;
+    console.error("channel", channel.guild.roles);
     const netplay = channel.guild.roles.find("name", NodaleCommand.DALE_ROLE_NAME);
     if (!netplay) {
       return Promise.reject("Cannot find dale role.");
     }
 
-    await message.member.removeRole(netplay);
+    await message.member.removeRole(undefined);
   }
 
   hasPermissionToRun(commandContext: CommandContext): boolean {

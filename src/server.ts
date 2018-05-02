@@ -4,7 +4,7 @@ import { CommandHandler } from "./command_handler";
 
 const commandHandler = new CommandHandler(config.prefix);
 
-const client = new Discord.Client();
+export const client = new Discord.Client();
 
 client.on("ready", () => {
   console.log("Bot has started");
