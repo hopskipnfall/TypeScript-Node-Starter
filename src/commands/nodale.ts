@@ -28,7 +28,7 @@ export class NodaleCommand implements Command {
     return NodaleCommand.ALLOWED_CHANNELS.includes(commandContext.originalMessage.channel.id);
   }
 
-  getHelpMessage(commandPrefix: string) {
+  getHelpMessage(commandPrefix: string): string {
     return `use ${commandPrefix}nodale to remove yourself from the Netplay role.`;
   }
 }
